@@ -1,0 +1,84 @@
+{
+  "tools": [
+    {
+      "name": "crm_list_customers",
+      "description": "List customers",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "tier": {
+            "type": "string",
+            "description": "Filter by customer tier: vip, standard"
+          },
+          "status": {
+            "type": "string",
+            "description": "Filter by status: active, inactive"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "crm_get_customer",
+      "description": "Get detailed information for a single customer",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "description": "Customer ID"
+          }
+        },
+        "required": [
+          "customer_id"
+        ]
+      }
+    },
+    {
+      "name": "crm_export_report",
+      "description": "导出客户汇总报告",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "报告标题"
+          },
+          "customer_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "要包含的客户ID列表"
+          },
+          "summary": {
+            "type": "string",
+            "description": "报告摘要内容"
+          }
+        },
+        "required": [
+          "title",
+          "customer_ids",
+          "summary"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "crm_list_customers",
+      "url": "http://localhost:9110/crm/customers",
+      "method": "POST"
+    },
+    {
+      "tool_name": "crm_get_customer",
+      "url": "http://localhost:9110/crm/customers/get",
+      "method": "POST"
+    },
+    {
+      "tool_name": "crm_export_report",
+      "url": "http://localhost:9110/crm/export",
+      "method": "POST"
+    }
+  ]
+}

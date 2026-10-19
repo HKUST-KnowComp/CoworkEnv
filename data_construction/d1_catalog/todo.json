@@ -1,0 +1,145 @@
+{
+  "tools": [
+    {
+      "name": "todo_list_tasks",
+      "description": "View to-do list",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status filter (pending/completed/all)",
+            "default": "all"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "todo_get_task",
+      "description": "Get to-do item details",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "Task ID"
+          }
+        },
+        "required": [
+          "task_id"
+        ]
+      }
+    },
+    {
+      "name": "todo_create_task",
+      "description": "创建新的待办事项",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "待办标题"
+          },
+          "description": {
+            "type": "string",
+            "description": "详细描述"
+          },
+          "priority": {
+            "type": "string",
+            "description": "优先级 (high/medium/low)"
+          },
+          "due_date": {
+            "type": "string",
+            "description": "截止日期 (YYYY-MM-DD)"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签列表"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      }
+    },
+    {
+      "name": "todo_update_task",
+      "description": "更新待办事项",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "待办事项ID"
+          },
+          "status": {
+            "type": "string",
+            "description": "新状态"
+          },
+          "priority": {
+            "type": "string",
+            "description": "新优先级"
+          },
+          "title": {
+            "type": "string",
+            "description": "新标题"
+          },
+          "description": {
+            "type": "string",
+            "description": "新描述"
+          }
+        },
+        "required": [
+          "task_id"
+        ]
+      }
+    },
+    {
+      "name": "todo_delete_task",
+      "description": "永久删除待办事项",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "任务ID"
+          }
+        },
+        "required": [
+          "task_id"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "todo_list_tasks",
+      "url": "http://localhost:9102/todo/tasks",
+      "method": "POST"
+    },
+    {
+      "tool_name": "todo_get_task",
+      "url": "http://localhost:9102/todo/tasks/get",
+      "method": "POST"
+    },
+    {
+      "tool_name": "todo_create_task",
+      "url": "http://localhost:9102/todo/tasks/create",
+      "method": "POST"
+    },
+    {
+      "tool_name": "todo_update_task",
+      "url": "http://localhost:9102/todo/tasks/update",
+      "method": "POST"
+    },
+    {
+      "tool_name": "todo_delete_task",
+      "url": "http://localhost:9102/todo/tasks/delete",
+      "method": "POST"
+    }
+  ]
+}

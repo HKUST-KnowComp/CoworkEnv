@@ -1,0 +1,103 @@
+{
+  "release_date": "2026-10-20",
+  "source_project": "claw-adapters",
+  "source_checkout_head": "23a257ce57906e49bc4c5e29d7b8f0ca0a8e9ff8",
+  "source_note": "Selected working-tree files; the original SHA-256 values identify the actual inputs. The checkout HEAD alone does not identify uncommitted changes.",
+  "release_scope": "Task construction and offline data-quality tools only.",
+  "changes": [
+    "Removed internal-only documentation references and unsupported claims.",
+    "Generator validates task/fixture names and finite non-negative weights; refuses to overwrite an existing task directory.",
+    "Leakage scanning retains distinct paths for fixtures with the same basename and refuses incomplete/empty scans.",
+    "Dedup reporting consistently identifies term-frequency cosine as lexical, regardless of optional packages.",
+    "Teacher summaries omit malformed, non-finite and out-of-range scores; historical verdict labels are documented as heuristics.",
+    "Catalog definitions are unchanged. Original upstream MIT attribution is retained."
+  ],
+  "upstream_license": {
+    "project": "claw-eval/claw-eval",
+    "url": "https://github.com/claw-eval/claw-eval/blob/main/LICENSE",
+    "retrieved_date": "2026-10-20",
+    "sha256": "de168535d426a732793cbd51adfc6f22f110a9f4bb251c5590e92f297a69cdc1"
+  },
+  "files": [
+    {
+      "path": "data_construction/d1_catalog/calendar.json",
+      "original_sha256": "2d8c7def01aa0e42221853f78db7a627bd8b6d6f349a5602adced82df38ca39d",
+      "release_sha256": "2d8c7def01aa0e42221853f78db7a627bd8b6d6f349a5602adced82df38ca39d"
+    },
+    {
+      "path": "data_construction/d1_catalog/config.json",
+      "original_sha256": "6d80104da6b294859e971d3118090747c350038723038478b7fe21f9abcba020",
+      "release_sha256": "6d80104da6b294859e971d3118090747c350038723038478b7fe21f9abcba020"
+    },
+    {
+      "path": "data_construction/d1_catalog/contacts.json",
+      "original_sha256": "4a042aca50ee1b02ce6348ad4d836ab302cf03f36407e31e79aa8c2b30a7e223",
+      "release_sha256": "4a042aca50ee1b02ce6348ad4d836ab302cf03f36407e31e79aa8c2b30a7e223"
+    },
+    {
+      "path": "data_construction/d1_catalog/crm.json",
+      "original_sha256": "cdd5356511e8c0573af85748842e9f3afad6940b8d2c783ea13764772ce0d968",
+      "release_sha256": "cdd5356511e8c0573af85748842e9f3afad6940b8d2c783ea13764772ce0d968"
+    },
+    {
+      "path": "data_construction/d1_catalog/finance.json",
+      "original_sha256": "a862ac1a16382d5912651e5e132de0fd60e2bf8456085578c881d57d8477c688",
+      "release_sha256": "a862ac1a16382d5912651e5e132de0fd60e2bf8456085578c881d57d8477c688"
+    },
+    {
+      "path": "data_construction/d1_catalog/gmail.json",
+      "original_sha256": "a7cfe7d0ba3c85e86107eaa089ad51620ae495906c3daa27d4fad0e7127df7ac",
+      "release_sha256": "a7cfe7d0ba3c85e86107eaa089ad51620ae495906c3daa27d4fad0e7127df7ac"
+    },
+    {
+      "path": "data_construction/d1_catalog/helpdesk.json",
+      "original_sha256": "dd5360bf6fe55fe458e81585f6fc6411a248d00239664145396ca49f72c619f6",
+      "release_sha256": "dd5360bf6fe55fe458e81585f6fc6411a248d00239664145396ca49f72c619f6"
+    },
+    {
+      "path": "data_construction/d1_catalog/inventory.json",
+      "original_sha256": "4858bb1e32702dfb2a61442bc09b37797dfdee10741a233173cadddec56ea05c",
+      "release_sha256": "4858bb1e32702dfb2a61442bc09b37797dfdee10741a233173cadddec56ea05c"
+    },
+    {
+      "path": "data_construction/d1_catalog/kb.json",
+      "original_sha256": "8dcce5ff8122861af2a0cca988ea23fa7a179a27096624b0c5f828006e6eb28f",
+      "release_sha256": "8dcce5ff8122861af2a0cca988ea23fa7a179a27096624b0c5f828006e6eb28f"
+    },
+    {
+      "path": "data_construction/d1_catalog/ocr.json",
+      "original_sha256": "e03744401fd99a4aca24417d6fe5e1f4daf8da49f06ca31224d15a5c648917eb",
+      "release_sha256": "e03744401fd99a4aca24417d6fe5e1f4daf8da49f06ca31224d15a5c648917eb"
+    },
+    {
+      "path": "data_construction/d1_catalog/scheduler.json",
+      "original_sha256": "928b334d8dae3ae8ae709d25033d05866247c5c8cdd928eb6b5a343ac893289b",
+      "release_sha256": "928b334d8dae3ae8ae709d25033d05866247c5c8cdd928eb6b5a343ac893289b"
+    },
+    {
+      "path": "data_construction/d1_catalog/todo.json",
+      "original_sha256": "375063c587c6b7d046a0cfb4ba7adfcc16214b5153c2401279dadcf2bcec77a8",
+      "release_sha256": "375063c587c6b7d046a0cfb4ba7adfcc16214b5153c2401279dadcf2bcec77a8"
+    },
+    {
+      "path": "data_construction/d1_generator.py",
+      "original_sha256": "92a3dd1090f0ebc3183904fce96a898ddd377896941b9bc2946cdb9005ea533b",
+      "release_sha256": "f533ac6617575ec73125ebc3e8424afd21df4aec2973f5c21b9b12f5a76f51cb"
+    },
+    {
+      "path": "data_construction/internal_dedup.py",
+      "original_sha256": "238581836d7c5a0424435e35af429796c0a51b23cbd672215a5883d1a09376e3",
+      "release_sha256": "3895fa2f4c81653bf20a05a68125955684783efab64a9d85de4d4fe55c8da8c6"
+    },
+    {
+      "path": "data_construction/leakage_scan.py",
+      "original_sha256": "45e379ec34fde7c665b150322fe307d9a3493c20184163ee3cedce9741fc3fff",
+      "release_sha256": "3600e27e763db49772d2da746afcee68872de6ee996b73bd81815ec836ec99a5"
+    },
+    {
+      "path": "data_construction/teacher_difficulty_filter.py",
+      "original_sha256": "213bd7422e474607e3a7fa2d99574d98ca26f433eb069ac54aca090adf160b2c",
+      "release_sha256": "3bde580526a73f8524a5adf01fb68e5f44c7c2ba98829adf82d944d4a93c9aaa"
+    }
+  ]
+}

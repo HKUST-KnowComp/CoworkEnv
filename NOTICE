@@ -1,0 +1,32 @@
+CoworkEnv — source and third-party notices
+========================================
+
+The first release selects data-construction utilities from the project's
+existing claw-adapters development tree. Original file hashes and release
+changes are recorded in docs/source_manifest.json. The public snapshot is not
+a full copy of that development tree or a reproduction of all its experiments.
+
+Claw-Eval
+---------
+Upstream: https://github.com/claw-eval/claw-eval
+License: MIT; copyright (c) 2026 claw-eval.
+Full upstream notice: third_party/claw-eval.LICENSE.
+
+data_construction/d1_catalog/*.json adapts tool and endpoint definitions from
+Claw-Eval task interfaces, including project extensions. The generator emits
+configuration and a grader that refer to Claw-Eval runtime APIs. The upstream
+license was checked at https://github.com/claw-eval/claw-eval/blob/main/LICENSE
+on 2026-10-20; older internal notes predate that available license.
+
+The generator's service routes and grader signatures are an integration
+contract, not a claim of compatibility with every upstream version. Service
+servers, the Claw-Eval package, benchmark tasks/data and adapters are not
+bundled. Their release/versioning and any additional terms remain separate.
+
+Other dependencies
+------------------
+PyYAML is installed separately and is not vendored. The result reader accepts
+Harbor-style result.json layouts; no Harbor runtime source is redistributed.
+ClawMark, WildClawBench, Slime and Megatron code/data are not included in this
+snapshot. References to future integrations do not grant rights to those
+projects or imply that an integration has been released or validated.

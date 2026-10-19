@@ -1,0 +1,196 @@
+# CoworkEnv
+
+CoworkEnv is a project for building executable work environments for agent data
+construction, trajectory collection and training.
+
+**This first release contains selected data-construction tools from our existing
+codebase.** It provides a task generator, tool-schema catalogs and offline
+quality checks. The environment runtime and training stack will be released in
+later stages; they are not required to run the utilities included here.
+
+## Available now
+
+- **Task generation:** turn a seed specification into a task definition, initial
+  service fixtures and a deterministic grader.
+- **Tool catalogs:** 44 tool definitions across 12 service interfaces, including
+  email, calendar, contacts, CRM, helpdesk, finance and scheduling.
+- **Numeric leakage checks:** look for declared ground-truth values in task
+  instructions and recognized text fixtures.
+- **Task diversity reports:** flag lexical near-duplicates and concentrated
+  template families within a task pool.
+- **Teacher difficulty summaries:** aggregate existing rollout completion scores
+  and identify tasks with high, low or intermediate observed performance.
+
+These are the existing project utilities, with limited release cleanup. No
+model endpoint, API key, GPU or cluster access is needed to run them.
+
+## Install
+
+Use Python 3.10 or newer. This release was checked with Python 3.12.
+
+```bash
+git clone https://github.com/HKUST-KnowComp/CoworkEnv.git
+cd CoworkEnv
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+Run the scripts directly from the repository root. There is no package-install
+step or environment server bundled in this release.
+
+## Use the tools with your data
+
+The paths below are placeholders for your own specifications, task directories
+and recorded results. This release does not include a task dataset or rollout
+archive.
+
+### Generate a task definition
+
+```bash
+python data_construction/d1_generator.py \
+  --spec /path/to/seed_spec.json \
+  --out outputs/constructed
+```
+
+The JSON specification follows `SeedSpec` in
+[`d1_generator.py`](data_construction/d1_generator.py). Required fields are
+`task_id`, `task_name`, `difficulty`, `category`, `services`, `prompt_body`,
+`language`, `fixtures` and `completion_checks`.
+
+- `services` lists catalog names. `fixtures` maps each service to a non-empty
+  mapping of JSON filenames to initial state; the first file is its primary
+  fixture. Fixture names must be plain filenames, not paths.
+- Each completion check has a `name`, `weight` and `kind`. Weights must be finite,
+  non-negative and sum to 1. Supported kinds are `tool_called`,
+  `tool_arg_contains`, `tool_arg_excludes`, `tool_arg_number_near` and
+  `audit_present`; their fields and semantics are documented in `CompletionCheck`.
+- Optional `safety_forbidden_tools` configures the grader's safety gate.
+  Optional `leakage_strings` declares answer strings to check in the prompt.
+- Use a fresh `task_id` or output directory: existing task directories are not
+  overwritten.
+
+Output is `outputs/constructed/tasks/<task_id>/`, containing `task.yaml`,
+`grader.py` and `fixtures/<service>/*.json`.
+
+**Generation does not execute or validate the task in an environment.** The
+generated YAML references `mock_services/<service>/server.py`, and the grader
+imports the `claw_eval` API. Compatible service servers, the task adapter and
+grader runtime are external to this release. The catalogs describe interfaces;
+they do not implement those services. Keep `grader.py` on the verifier side.
+
+The prompt leakage gate only checks supplied strings. Strings containing an
+ASCII capital, digit or `@` block generation on a match; other matches produce
+warnings. Fixtures are not scanned by this gate. Review task goals, fixtures,
+evidence availability and grader predicates before using generated tasks.
+
+### Scan known numeric answers
+
+```bash
+python data_construction/leakage_scan.py \
+  --task-dir /path/to/task \
+  --gt 69.6 49.7
+```
+
+The scanner reads `instruction.md`, the prompt and `reference_solution` from
+`tests/task.yaml` (or root `task.yaml`), and `.json`, `.csv`, `.txt`, `.md`,
+`.yaml` and `.yml` files under `exec/` and `fixtures/`.
+
+Exit codes: **0** means no supplied values matched in scanned text, **2** means a
+match was found, and **1** means the input could not be scanned completely.
+The CLI ignores integer values 0 and 100 by default; pass `--ignore-ints` with
+no values to disable that exception. Matching is numeric and approximate, with
+tolerance `max(1e-6, abs(gt) * 1e-4)`; binary files, semantic answers, negative
+numbers and scientific notation require separate review. A clean result is not
+a general guarantee against answer leakage.
+
+### Check a task pool for near-duplicates
+
+```bash
+python data_construction/internal_dedup.py \
+  --pool-dir /path/to/task_directories \
+  --output outputs/internal_dedup.json
+```
+
+Each child directory is a task. Prompts are loaded from `tests/task.yaml`,
+`task.yaml` or `instruction.md`. `--candidate /path/to/new_task` adds a task to
+the comparison; use a distinct directory name so it does not replace a pool
+entry. `--dataset-dir /path/to/tasks --tasks id1 id2` selects explicit task IDs.
+
+The report flags 4-gram overlap greater than 0.50, term-frequency cosine at least
+0.85 and template-family counts greater than 3. Cosine is **lexical**, not an
+embedding score. Template families are inferred from task names; word-based
+tokenization is limited for languages without whitespace segmentation. This is
+an all-pairs report, with quadratic pair count. Prompts that cannot be extracted from these layouts are omitted;
+file-access errors can still stop the command. It does not remove tasks, fail the command on a flagged pair, or check
+contamination against a held-out benchmark.
+
+### Summarize recorded teacher rollouts
+
+```bash
+python data_construction/teacher_difficulty_filter.py \
+  --jobs-dir /path/to/teacher_jobs \
+  --output outputs/teacher_difficulty.json
+```
+
+The reader finds `<task_id>__<trial_suffix>/result.json` recursively. A suffix is
+alphanumeric. It reads `verifier_result.rewards.completion`, falling back to
+`reward`; flat verifier and top-level completion/reward schemas are also
+accepted. Scores must be finite and in `[0, 1]`. Missing or invalid scores are
+omitted, not treated as task failures. `k` counts accepted scores, not all
+attempted runs. Repeated `--jobs-dir` inputs should cover disjoint trials from
+the same teacher and evaluation setup to avoid double counting or mixing
+incomparable scores.
+
+The report contains per-task `k`, mean, range and variance. Historical labels
+are retained: `TRIVIAL` for mean ≥ 0.999, `UNSOLVABLE` for mean ≤ 0.001 and `KEEP`
+otherwise. These describe observed scores; they do not prove solvability or
+learning value. Inspect failures and sample counts before deciding to filter.
+This command reads results only; it does not launch teacher rollouts.
+
+## Repository layout
+
+```text
+data_construction/
+  d1_generator.py
+  d1_catalog/                  # Service tool/endpoint schemas
+  leakage_scan.py
+  internal_dedup.py
+  teacher_difficulty_filter.py
+tests/                        # Regression tests for the released utilities
+docs/source_manifest.json     # Original file hashes and release changes
+third_party/claw-eval.LICENSE # Upstream notice for adapted tool definitions
+```
+
+Run the checks with `python -m unittest discover -s tests -v`. They cover the
+released utilities and emitted file structure, not execution inside the
+unreleased environment runtime.
+
+## Roadmap
+
+The following are planned release areas, not currently supported public APIs:
+
+- [ ] Environment execution: initialization/reset, service management, sandbox
+  integration, tool dispatch and artifact collection.
+- [ ] Trajectory recording and export, with documented schemas and teacher
+  rollout collection.
+- [ ] Task construction workflow: seed specifications, golden-state checks,
+  grader validation and task manifests with source/split information.
+- [ ] Evaluation adapters, preserving each benchmark's scoring protocol and
+  third-party terms.
+- [ ] SFT conversion and training configurations.
+- [ ] RL rollout integration, reproducible training configurations and the
+  required upstream patches/version pins.
+- [ ] Process-reward evaluation, rubric review and calibration tools, with
+  implementation, test and training-validation status reported separately.
+- [ ] Dataset/model release indexes and reproducibility records, where available
+  and redistributable.
+
+## License and provenance
+
+Project code is released under the [MIT License](LICENSE). Tool-schema catalogs
+were adapted from Claw-Eval interfaces; their upstream notice is retained in
+[third_party/claw-eval.LICENSE](third_party/claw-eval.LICENSE). See
+[NOTICE](NOTICE) for attribution and the boundaries of this release. No upstream
+benchmark dataset, service implementation, Slime/Megatron code, model checkpoint
+or training log is bundled here.

@@ -1,0 +1,52 @@
+{
+  "tools": [
+    {
+      "name": "contacts_search",
+      "description": "搜索通讯录中的联系人",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "搜索关键词（姓名、部门等）"
+          },
+          "department": {
+            "type": "string",
+            "description": "按部门筛选"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "contacts_get",
+      "description": "获取联系人详细信息",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "contact_id": {
+            "type": "string",
+            "description": "联系人ID"
+          }
+        },
+        "required": [
+          "contact_id"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "contacts_search",
+      "url": "http://localhost:9103/contacts/search",
+      "method": "POST"
+    },
+    {
+      "tool_name": "contacts_get",
+      "url": "http://localhost:9103/contacts/get",
+      "method": "POST"
+    }
+  ]
+}

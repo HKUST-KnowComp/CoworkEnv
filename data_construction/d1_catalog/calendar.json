@@ -1,0 +1,122 @@
+{
+  "tools": [
+    {
+      "name": "calendar_list_events",
+      "description": "获取指定日期范围内的日历事件",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "开始日期 (YYYY-MM-DD)"
+          },
+          "days": {
+            "type": "integer",
+            "description": "查看几天的日程",
+            "default": 1
+          }
+        },
+        "required": [
+          "date"
+        ]
+      }
+    },
+    {
+      "name": "calendar_get_user_events",
+      "description": "获取指定用户在指定日期的日程",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "用户邮箱"
+          },
+          "date": {
+            "type": "string",
+            "description": "日期 (YYYY-MM-DD)"
+          }
+        },
+        "required": [
+          "user",
+          "date"
+        ]
+      }
+    },
+    {
+      "name": "calendar_create_event",
+      "description": "创建新的日历事件",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "事件标题"
+          },
+          "start_time": {
+            "type": "string",
+            "description": "开始时间 (ISO 8601)"
+          },
+          "end_time": {
+            "type": "string",
+            "description": "结束时间 (ISO 8601)"
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "参会人邮箱列表"
+          },
+          "location": {
+            "type": "string",
+            "description": "会议地点"
+          }
+        },
+        "required": [
+          "title",
+          "start_time",
+          "end_time",
+          "attendees"
+        ]
+      }
+    },
+    {
+      "name": "calendar_delete_event",
+      "description": "删除日历事件",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "description": "事件ID"
+          }
+        },
+        "required": [
+          "event_id"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "calendar_list_events",
+      "url": "http://localhost:9101/calendar/events",
+      "method": "POST"
+    },
+    {
+      "tool_name": "calendar_get_user_events",
+      "url": "http://localhost:9101/calendar/user_events",
+      "method": "POST"
+    },
+    {
+      "tool_name": "calendar_create_event",
+      "url": "http://localhost:9101/calendar/events/create",
+      "method": "POST"
+    },
+    {
+      "tool_name": "calendar_delete_event",
+      "url": "http://localhost:9101/calendar/events/delete",
+      "method": "POST"
+    }
+  ]
+}

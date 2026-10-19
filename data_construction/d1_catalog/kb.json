@@ -1,0 +1,83 @@
+{
+  "tools": [
+    {
+      "name": "kb_search",
+      "description": "Search knowledge base articles",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search keywords"
+          },
+          "category": {
+            "type": "string",
+            "description": "Filter by category"
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "Maximum number of results to return",
+            "default": 5
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "kb_get_article",
+      "description": "Get knowledge base article details",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "article_id": {
+            "type": "string",
+            "description": "Article ID"
+          }
+        },
+        "required": [
+          "article_id"
+        ]
+      }
+    },
+    {
+      "name": "kb_update_article",
+      "description": "Update knowledge base article content",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "article_id": {
+            "type": "string",
+            "description": "Article ID"
+          },
+          "content": {
+            "type": "string",
+            "description": "Updated content"
+          }
+        },
+        "required": [
+          "article_id",
+          "content"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "kb_search",
+      "url": "http://localhost:9106/kb/search",
+      "method": "POST"
+    },
+    {
+      "tool_name": "kb_get_article",
+      "url": "http://localhost:9106/kb/articles/get",
+      "method": "POST"
+    },
+    {
+      "tool_name": "kb_update_article",
+      "url": "http://localhost:9106/kb/articles/update",
+      "method": "POST"
+    }
+  ]
+}

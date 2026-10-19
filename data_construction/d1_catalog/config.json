@@ -1,0 +1,106 @@
+{
+  "tools": [
+    {
+      "name": "config_list_integrations",
+      "description": "List all third-party integrations (overview information)",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Filter by status: active, degraded, expired"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "config_get_integration",
+      "description": "Get full configuration details for a single integration",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "integration_id": {
+            "type": "string",
+            "description": "Integration ID"
+          }
+        },
+        "required": [
+          "integration_id"
+        ]
+      }
+    },
+    {
+      "name": "config_update_integration",
+      "description": "更新集成的状态或备注",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "integration_id": {
+            "type": "string",
+            "description": "集成ID"
+          },
+          "status": {
+            "type": "string",
+            "description": "新状态"
+          },
+          "notes": {
+            "type": "string",
+            "description": "备注"
+          }
+        },
+        "required": [
+          "integration_id"
+        ]
+      }
+    },
+    {
+      "name": "config_send_notification",
+      "description": "发送通知邮件给团队成员",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "收件人邮箱"
+          },
+          "subject": {
+            "type": "string",
+            "description": "邮件主题"
+          },
+          "body": {
+            "type": "string",
+            "description": "邮件正文"
+          }
+        },
+        "required": [
+          "to",
+          "subject",
+          "body"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "config_list_integrations",
+      "url": "http://localhost:9111/config/integrations",
+      "method": "POST"
+    },
+    {
+      "tool_name": "config_get_integration",
+      "url": "http://localhost:9111/config/integrations/get",
+      "method": "POST"
+    },
+    {
+      "tool_name": "config_update_integration",
+      "url": "http://localhost:9111/config/integrations/update",
+      "method": "POST"
+    },
+    {
+      "tool_name": "config_send_notification",
+      "url": "http://localhost:9111/config/notify",
+      "method": "POST"
+    }
+  ]
+}

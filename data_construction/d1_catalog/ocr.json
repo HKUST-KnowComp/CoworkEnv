@@ -1,0 +1,25 @@
+{
+  "tools": [
+    {
+      "name": "ocr_extract_text",
+      "description": "Extract text from a scanned document or image using OCR",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "image_path": {
+            "type": "string",
+            "description": "Filename or path of the document/image to process"
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "ocr_extract_text",
+      "url": "http://localhost:9116/ocr/extract",
+      "method": "POST"
+    }
+  ]
+}

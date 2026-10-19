@@ -1,0 +1,118 @@
+{
+  "tools": [
+    {
+      "name": "gmail_list_messages",
+      "description": "获取收件箱中的邮件列表",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "days_back": {
+            "type": "integer",
+            "description": "获取最近几天的邮件",
+            "default": 7
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "最大返回数量",
+            "default": 20
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "gmail_get_message",
+      "description": "根据邮件ID获取邮件详细内容",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "description": "邮件ID"
+          }
+        },
+        "required": [
+          "message_id"
+        ]
+      }
+    },
+    {
+      "name": "gmail_save_draft",
+      "description": "将邮件保存为草稿",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "收件人邮箱地址"
+          },
+          "subject": {
+            "type": "string",
+            "description": "邮件主题"
+          },
+          "body": {
+            "type": "string",
+            "description": "邮件正文"
+          },
+          "reply_to_message_id": {
+            "type": "string",
+            "description": "如果是回复邮件，原邮件ID"
+          }
+        },
+        "required": [
+          "to",
+          "subject",
+          "body"
+        ]
+      }
+    },
+    {
+      "name": "gmail_send_message",
+      "description": "发送邮件",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "收件人邮箱地址"
+          },
+          "subject": {
+            "type": "string",
+            "description": "邮件主题"
+          },
+          "body": {
+            "type": "string",
+            "description": "邮件正文"
+          }
+        },
+        "required": [
+          "to",
+          "subject",
+          "body"
+        ]
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "tool_name": "gmail_list_messages",
+      "url": "http://localhost:9100/gmail/messages",
+      "method": "POST"
+    },
+    {
+      "tool_name": "gmail_get_message",
+      "url": "http://localhost:9100/gmail/messages/get",
+      "method": "POST"
+    },
+    {
+      "tool_name": "gmail_save_draft",
+      "url": "http://localhost:9100/gmail/drafts/save",
+      "method": "POST"
+    },
+    {
+      "tool_name": "gmail_send_message",
+      "url": "http://localhost:9100/gmail/send",
+      "method": "POST"
+    }
+  ]
+}

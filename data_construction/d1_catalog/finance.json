@@ -1,0 +1,84 @@
+{
+ "tools": [
+  {
+   "name": "finance_list_transactions",
+   "description": "查看交易记录",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "start_date": {
+      "type": "string",
+      "description": "起始日期(YYYY-MM-DD)"
+     },
+     "end_date": {
+      "type": "string",
+      "description": "截止日期(YYYY-MM-DD)"
+     }
+    },
+    "required": []
+   }
+  },
+  {
+   "name": "finance_get_transaction",
+   "description": "获取交易详情",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "transaction_id": {
+      "type": "string",
+      "description": "交易ID"
+     }
+    },
+    "required": [
+     "transaction_id"
+    ]
+   }
+  },
+  {
+   "name": "finance_submit_report",
+   "description": "提交费用报告",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "title": {
+      "type": "string",
+      "description": "报告标题"
+     },
+     "transactions": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "包含的交易ID列表"
+     },
+     "total_amount": {
+      "type": "number",
+      "description": "总金额"
+     }
+    },
+    "required": [
+     "title",
+     "transactions",
+     "total_amount"
+    ]
+   }
+  }
+ ],
+ "endpoints": [
+  {
+   "tool_name": "finance_list_transactions",
+   "url": "http://localhost:9104/finance/transactions",
+   "method": "POST"
+  },
+  {
+   "tool_name": "finance_get_transaction",
+   "url": "http://localhost:9104/finance/transactions/get",
+   "method": "POST"
+  },
+  {
+   "tool_name": "finance_submit_report",
+   "url": "http://localhost:9104/finance/report/submit",
+   "method": "POST"
+  }
+ ]
+}
