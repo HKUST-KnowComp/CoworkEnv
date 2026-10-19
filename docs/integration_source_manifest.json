@@ -1,0 +1,192 @@
+{
+  "source_archive": "PocketWorker-release-v1.0-clean.zip",
+  "source_sha256": "efc3a1d5dd6d08c8e41435d2addef5a8eac14141ca9f3b239f355a431b829394",
+  "files": [
+    {
+      "archive_path": "clawmark-eval/adapter.py",
+      "release_path": "adapters/claw_eval/adapter.py",
+      "original_sha256": "fbf9c1adc343b58eaee95355c16c13853bfdb562a6d2beaea3a0c56a5c70186b",
+      "release_sha256": "8a170e6b1921e5d5e6d95cf65944aa9656f8fec359d36f0af1d21ad46d707014"
+    },
+    {
+      "archive_path": "clawmark-eval/run_adapter.py",
+      "release_path": "adapters/claw_eval/run_adapter.py",
+      "original_sha256": "47014d147d591b4cc0594bc05eae69ca019d4f14d33a4152389cb42b17db4ce2",
+      "release_sha256": "b296cfad3ccb5b849183f818f1c18b12b96c92ac86145ef92f00bea3b7a505ce"
+    },
+    {
+      "archive_path": "scripts/export_rollouts.py",
+      "release_path": "scripts/export_rollouts.py",
+      "original_sha256": "4317c22ae51ccb012d13b675509ccd28d6f2103a633cff91dec724a6a854c4af",
+      "release_sha256": "af61b961e46a90e36e9ad711f50ba137fd40c1491df5cc05a3e3d074f1a14b45"
+    },
+    {
+      "archive_path": "clawmark-eval/runtime/mcp_bridge/Dockerfile",
+      "release_path": "adapters/claw_eval/runtime/mcp_bridge/Dockerfile",
+      "original_sha256": "a49fd1dfe1ab94198d1f87146f5f713d0c22f8bb69a3540810b7868cdf67b800",
+      "release_sha256": "a7819e2c288929d5056a3d2d9e07d0d5144f8b893dd9141f35510c96eecec830"
+    },
+    {
+      "archive_path": "clawmark-eval/runtime/mcp_bridge/bridge_server.py",
+      "release_path": "adapters/claw_eval/runtime/mcp_bridge/bridge_server.py",
+      "original_sha256": "7bc229fea2f288cdc52fc3555c8a946f35ab1a0a2f04517c4db876e52228754f",
+      "release_sha256": "d2d33b6cef9623b420eb5cda96b3c3beebee81713309ab8e72719d77091625ed"
+    },
+    {
+      "archive_path": "clawmark-eval/runtime/mcp_bridge/start.sh",
+      "release_path": "adapters/claw_eval/runtime/mcp_bridge/start.sh",
+      "original_sha256": "9443044e285625a557bb694a68236d9cb4095c5d0bb57fae5889d0954c6801cd",
+      "release_sha256": "38fbf6530d1342a1c81d1a9f98aaf1c0c47d86d8cb949f2d18bd4dfdca346725"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/__init__.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/__init__.py",
+      "original_sha256": "01119a500fd0845fde7276ef4dd4cd290f383b5fcd7d41a57348ade7b5a5fc8b",
+      "release_sha256": "01119a500fd0845fde7276ef4dd4cd290f383b5fcd7d41a57348ade7b5a5fc8b"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/graders/__init__.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/graders/__init__.py",
+      "original_sha256": "89d667f8aee4c93f92aa3b741d3f8bf430011cc277a29a30b21cb3ee3c2004b9",
+      "release_sha256": "6960aede041372f4647a669dfabb8d13cd198730756d93ea427c3c7b38fc880c"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/graders/base.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/graders/base.py",
+      "original_sha256": "beabf04839817ea08e144fa199f0da7c0bf940341a04905c013a0c845c32ee56",
+      "release_sha256": "beabf04839817ea08e144fa199f0da7c0bf940341a04905c013a0c845c32ee56"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/graders/pinbench_common.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/graders/pinbench_common.py",
+      "original_sha256": "5a06506a88084acd52836316574ddfd9f8b4bd13d64d85fd760b58715f444b6d",
+      "release_sha256": "5a06506a88084acd52836316574ddfd9f8b4bd13d64d85fd760b58715f444b6d"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/__init__.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/__init__.py",
+      "original_sha256": "e0334c9745c78392431ae4e64923c4392b1798f258140ae9aecc06a595b78ae1",
+      "release_sha256": "e0334c9745c78392431ae4e64923c4392b1798f258140ae9aecc06a595b78ae1"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/content.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/content.py",
+      "original_sha256": "e3b4e558c4c4585af6d013dd6769d672aab5b8b27a1401f30fbde4da0b2d95ce",
+      "release_sha256": "e3b4e558c4c4585af6d013dd6769d672aab5b8b27a1401f30fbde4da0b2d95ce"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/message.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/message.py",
+      "original_sha256": "772b760e097532d78a8196cec75929f1b5e762f2eef7dbc7118a14170002a0b3",
+      "release_sha256": "772b760e097532d78a8196cec75929f1b5e762f2eef7dbc7118a14170002a0b3"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/scoring.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/scoring.py",
+      "original_sha256": "b22ba9b92fec05b003c17669ab0b5f1be80f6d416c4547a3d7461c163e9a125a",
+      "release_sha256": "b22ba9b92fec05b003c17669ab0b5f1be80f6d416c4547a3d7461c163e9a125a"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/task.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/task.py",
+      "original_sha256": "f0f21183997f3bc303a61de7ef33772a0ea5cc097e0a03caa8f11c592210e6c1",
+      "release_sha256": "f0f21183997f3bc303a61de7ef33772a0ea5cc097e0a03caa8f11c592210e6c1"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/tool.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/tool.py",
+      "original_sha256": "a5aab49c8a96803abc6d4b50503806b0baefabaa1d16c9b073893b2bb164bf80",
+      "release_sha256": "a5aab49c8a96803abc6d4b50503806b0baefabaa1d16c9b073893b2bb164bf80"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/models/trace.py",
+      "release_path": "adapters/claw_eval/template/tests/claw_eval/models/trace.py",
+      "original_sha256": "b18264883ab3283dba772f989da17b16e8278fdef2f0815e68aa6c41cd2b1a61",
+      "release_sha256": "b18264883ab3283dba772f989da17b16e8278fdef2f0815e68aa6c41cd2b1a61"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/test.sh",
+      "release_path": "adapters/claw_eval/template/tests/test.sh",
+      "original_sha256": "042bdcf21560ac5cf7a1e238655ad6b19ff6f07dcee08dae684716f1a8a8dd68",
+      "release_sha256": "119eea9b9b18d64e6c98d087ae56ab01ea23cc5b247f67a5e61a4883e46750b2"
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/test_runner.py",
+      "release_path": "adapters/claw_eval/template/tests/test_runner.py",
+      "original_sha256": "c75b68cde4979e854d528a9aa558bdd868b1f8ba7b25fd0572570ed68148937c",
+      "release_sha256": "c7ae716631c49ac609aeb25203e3db897c41e1a8b0fda033660f04b845d992c3"
+    }
+  ],
+  "release_date": "2026-10-20",
+  "release_scope": "Selected Claw-Eval single-service Pinbench adapter and Harbor main-agent text ATIF export; ClawMark and training excluded.",
+  "upstream_validation": {
+    "repository": "https://github.com/claw-eval/claw-eval",
+    "commit": "5680b8b11ff2ee5dd2b07b89086a29a5c5c984d7",
+    "tasks": [
+      "T087_pinbench_market_news_brief",
+      "T090_pinbench_config_change_plan",
+      "T095_pinbench_apm_market_research"
+    ]
+  },
+  "changes": [
+    "Renamed legacy clawmark-eval directory to adapters/claw_eval; it is unrelated to the separately deferred ClawMark tree.",
+    "Replaced private checkout defaults and symlinks with an explicit trusted source checkout; bounded copied services and fixture paths.",
+    "Removed offline self-authored trace scoring and synthesized oracle solutions; restricted conversion to the supported Pinbench grading path.",
+    "Added bridge-owned HTTP dispatch evidence and harness ATIF final-answer grading; fail closed on missing/malformed evidence.",
+    "Preserved tool JSON schemas and actual HTTP response statuses; added service startup timeout failure.",
+    "Pinned direct optional dependencies; removed unused grader registry and trace IO modules.",
+    "Updated Harbor ATIF capability API; kept zero rewards; reject nonfinite reward thresholds and incomplete conversion by default; atomic no-clobber local export.",
+    "Added regression tests, README instructions, attribution and explicit validation boundaries."
+  ],
+  "excluded_source_files": [
+    {
+      "archive_path": "clawmark-eval/classify_tasks.py",
+      "reason": "Unused classifier, registry or trace IO; outside the selected runtime dependency path."
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/graders/registry.py",
+      "reason": "Unused classifier, registry or trace IO; outside the selected runtime dependency path."
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/trace/__init__.py",
+      "reason": "Unused classifier, registry or trace IO; outside the selected runtime dependency path."
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/trace/reader.py",
+      "reason": "Unused classifier, registry or trace IO; outside the selected runtime dependency path."
+    },
+    {
+      "archive_path": "clawmark-eval/template/tests/claw_eval/trace/writer.py",
+      "reason": "Unused classifier, registry or trace IO; outside the selected runtime dependency path."
+    }
+  ],
+  "new_files": [
+    {
+      "path": "requirements-adapters.txt",
+      "release_sha256": "e44163c7c6c036a74a1573d2143fdbd74f1eb39b60bed70ad03ae27ea46a1c76"
+    },
+    {
+      "path": "requirements-export.txt",
+      "release_sha256": "b206329b8a4cf760e9eb2bee668601ffcee13eb50445734df6ff36096a511e8e"
+    },
+    {
+      "path": "adapters/claw_eval/runtime/mcp_bridge/requirements.txt",
+      "release_sha256": "6d167839da05bbd21ccdfa0075fab2d81633f8f5d3bf64dfd7d6e3e505a66224"
+    },
+    {
+      "path": "tests/test_integrations.py",
+      "release_sha256": "06a7cf99d690eec173ba90a66ed89951471fa1ff85a8a5014a18ce043e4af467"
+    },
+    {
+      "path": "docs/integrations.md",
+      "release_sha256": "69aa87326f522cfc44b911355ce6688566871db4f0f30c1c9d9063dfb3aaa532"
+    }
+  ],
+  "validation": {
+    "unit_and_integration_tests": 19,
+    "upstream_task_conversion": 3,
+    "local_service_diagnostic": "Two real MCP-over-HTTP calls against upstream RSS service, verifier scoring of recorded evidence and scripted ATIF answer, Harbor JSONL export. Not an LLM rollout.",
+    "docker_build_and_model_rollout": "Not repeated during this extraction/cleanup on the preparation host (Docker unavailable); this is not a claim that the original full workflow was untested.",
+    "development_workflow": "Complete development workflow tested locally, as confirmed by the project maintainer; the public release is a selected subset."
+  }
+}

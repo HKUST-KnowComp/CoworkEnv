@@ -1,0 +1,6 @@
+fastmcp==2.14.5
+httpx==0.28.1
+fastapi==0.149.0
+uvicorn==0.54.0
+pydantic==2.14.1
+jsonschema==4.26.0

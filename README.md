@@ -3,10 +3,14 @@
 CoworkEnv is a project for building executable work environments for agent data
 construction, trajectory collection and training.
 
-**This first release contains selected data-construction tools from our existing
-codebase.** It provides a task generator, tool-schema catalogs and offline
-quality checks. The environment runtime and training stack will be released in
-later stages; they are not required to run the utilities included here.
+**This staged release contains selected tools from our existing codebase:** task
+construction and quality checks, a Claw-Eval → Harbor adapter for single-service
+Pinbench text/tool tasks, and local Harbor trajectory export. The full environment
+and training stack remain on the roadmap. No benchmark dataset or model is bundled.
+
+The complete development workflow has been tested locally. This repository
+publishes selected components of that workflow; not all files and configurations
+needed to reproduce the full development setup are included in this release.
 
 ## Available now
 
@@ -20,9 +24,14 @@ later stages; they are not required to run the utilities included here.
   template families within a task pool.
 - **Teacher difficulty summaries:** aggregate existing rollout completion scores
   and identify tasks with high, low or intermediate observed performance.
+- **Environment adapter:** convert selected external Claw-Eval tasks into Harbor
+  tasks with a live MCP/service sidecar, bridge-recorded tool evidence and grading.
+- **Trajectory export:** convert existing Harbor ATIF trials to local JSONL,
+  preserving zero rewards and reporting skipped or invalid trials.
 
-These are the existing project utilities, with limited release cleanup. No
-model endpoint, API key, GPU or cluster access is needed to run them.
+These are existing project components with release cleanup. Offline construction,
+conversion and export need no model endpoint, API key, GPU or cluster access.
+Running an agent additionally requires Docker and the chosen model's credentials.
 
 ## Install
 
@@ -36,8 +45,15 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Run the scripts directly from the repository root. There is no package-install
-step or environment server bundled in this release.
+Run scripts directly from the repository root. The optional adapter and Harbor
+integration require **Python 3.12** and their own dependencies:
+
+```bash
+python -m pip install -r requirements-adapters.txt -r requirements-export.txt
+```
+
+The service-side dependencies are installed inside the generated sidecar image.
+See [the integration guide](docs/integrations.md) for scope, versions and validation.
 
 ## Use the tools with your data
 
@@ -75,8 +91,9 @@ Output is `outputs/constructed/tasks/<task_id>/`, containing `task.yaml`,
 
 **Generation does not execute or validate the task in an environment.** The
 generated YAML references `mock_services/<service>/server.py`, and the grader
-imports the `claw_eval` API. Compatible service servers, the task adapter and
-grader runtime are external to this release. The catalogs describe interfaces;
+imports the `claw_eval` API. Compatible service servers remain external to this
+release. The adapter below supports a specific Pinbench grader family; it does
+**not** execute all graders emitted by this generator. The catalogs describe interfaces;
 they do not implement those services. Keep `grader.py` on the verifier side.
 
 The prompt leakage gate only checks supplied strings. Strings containing an
@@ -148,6 +165,32 @@ otherwise. These describe observed scores; they do not prove solvability or
 learning value. Inspect failures and sample counts before deciding to filter.
 This command reads results only; it does not launch teacher rollouts.
 
+## Execute and export an existing task
+
+Use your own trusted Claw-Eval checkout, including its service code and fixtures:
+
+```bash
+python adapters/claw_eval/run_adapter.py \
+  --claw-eval-root /path/to/claw-eval \
+  --task-ids T087_pinbench_market_news_brief \
+  --output-dir outputs/claw-eval
+
+# Requires Docker Compose, an MCP-capable Harbor agent and its model credentials.
+harbor run --path outputs/claw-eval/T087_pinbench_market_news_brief \
+  --agent claude-code --model "$HARBOR_MODEL" \
+  --env docker --n-concurrent 1 --job-name market-brief
+
+python scripts/export_rollouts.py --jobs-dir jobs/market-brief \
+  --episodes last --output outputs/market-brief.jsonl
+```
+
+Set `HARBOR_MODEL` to a model supported by your configured Harbor agent. The
+adapter retains the selected task's grader, records HTTP tool dispatches, and
+reads the harness's final ATIF answer. A fresh service sidecar provides the
+initial fixture state for each trial. This is a task adaptation, not a claim of
+official benchmark score equivalence. [Supported tasks, grading boundaries and
+export options](docs/integrations.md) are documented separately.
+
 ## Repository layout
 
 ```text
@@ -157,27 +200,36 @@ data_construction/
   leakage_scan.py
   internal_dedup.py
   teacher_difficulty_filter.py
-tests/                        # Regression tests for the released utilities
+adapters/claw_eval/            # Selected task conversion, MCP bridge, verifier
+scripts/export_rollouts.py     # Local Harbor ATIF → JSONL
+tests/                        # Regression tests; optional upstream checks
 docs/source_manifest.json     # Original file hashes and release changes
+docs/integration_source_manifest.json
+docs/integrations.md           # Setup, scope and validation limits
 third_party/claw-eval.LICENSE # Upstream notice for adapted tool definitions
 ```
 
-Run the checks with `python -m unittest discover -s tests -v`. They cover the
-released utilities and emitted file structure, not execution inside the
-unreleased environment runtime.
+Run checks with `python -m unittest discover -s tests -v`. Optional integration
+tests skip if their dependencies or external checkout are absent. See the guide
+for the checks repeated on this extracted release and its reproduction scope.
 
 ## Roadmap
 
 The following are planned release areas, not currently supported public APIs:
 
+- [ ] Publish the remaining runtime dependencies and complete run configurations
+  needed to reproduce the full locally tested workflow.
 - [ ] Environment execution: initialization/reset, service management, sandbox
-  integration, tool dispatch and artifact collection.
-- [ ] Trajectory recording and export, with documented schemas and teacher
-  rollout collection.
+  integration and artifact collection beyond the selected single-service path.
+- [ ] Broader trajectory support: multimodal/subagent export and teacher
+  rollout collection workflows.
 - [ ] Task construction workflow: seed specifications, golden-state checks,
   grader validation and task manifests with source/split information.
 - [ ] Evaluation adapters, preserving each benchmark's scoring protocol and
   third-party terms.
+- [ ] ClawMark adapter and examples, following a separate backend/dependency
+  review and release under the applicable upstream terms. ClawMark is deferred
+  from this release; its upstream code/data are not included.
 - [ ] SFT conversion and training configurations.
 - [ ] RL rollout integration, reproducible training configurations and the
   required upstream patches/version pins.
@@ -189,8 +241,9 @@ The following are planned release areas, not currently supported public APIs:
 ## License and provenance
 
 Project code is released under the [MIT License](LICENSE). Tool-schema catalogs
-were adapted from Claw-Eval interfaces; their upstream notice is retained in
+and a small vendored grader/model subset come from Claw-Eval; its notice is retained in
 [third_party/claw-eval.LICENSE](third_party/claw-eval.LICENSE). See
 [NOTICE](NOTICE) for attribution and the boundaries of this release. No upstream
 benchmark dataset, service implementation, Slime/Megatron code, model checkpoint
-or training log is bundled here.
+or training log is bundled here. Conversion copies selected service/fixture files
+from the external checkout into ignored local output, not into this repository.

@@ -1,10 +1,12 @@
 CoworkEnv — source and third-party notices
 ========================================
 
-The first release selects data-construction utilities from the project's
-existing claw-adapters development tree. Original file hashes and release
-changes are recorded in docs/source_manifest.json. The public snapshot is not
-a full copy of that development tree or a reproduction of all its experiments.
+This release selects data-construction utilities and environment/trajectory
+integration code from the project's existing claw-adapters development tree
+and PocketWorker-release-v1.0-clean.zip. Original file hashes and release changes
+are recorded in docs/source_manifest.json and docs/integration_source_manifest.json.
+The public snapshot is not a full copy of that development tree or a reproduction
+of all its experiments.
 
 Claw-Eval
 ---------
@@ -18,15 +20,23 @@ configuration and a grader that refer to Claw-Eval runtime APIs. The upstream
 license was checked at https://github.com/claw-eval/claw-eval/blob/main/LICENSE
 on 2026-10-20; older internal notes predate that available license.
 
-The generator's service routes and grader signatures are an integration
-contract, not a claim of compatibility with every upstream version. Service
-servers, the Claw-Eval package, benchmark tasks/data and adapters are not
-bundled. Their release/versioning and any additional terms remain separate.
+adapters/claw_eval/template/tests/claw_eval/ contains a selected subset of the
+Claw-Eval models and grading helpers. Its graders/__init__.py was reduced to
+avoid importing the unreleased task registry. The other retained upstream
+Python files are unchanged from the source archive. The upstream MIT notice
+also accompanies generated service and grading payloads.
+
+The adapter and its MCP/verifier scripts are project adaptations, not upstream
+Claw-Eval's official runner. Service servers and benchmark tasks/fixtures are
+not bundled; conversion copies selected files from a user-supplied external
+checkout into local output. The catalog routes and grading interfaces do not
+claim compatibility with every upstream revision.
 
 Other dependencies
 ------------------
-PyYAML is installed separately and is not vendored. The result reader accepts
-Harbor-style result.json layouts; no Harbor runtime source is redistributed.
+PyYAML, Pydantic, Harbor, datasets, FastMCP and other declared dependencies are
+installed separately and are not vendored. The exporter calls Harbor's own ATIF
+conversion API; no Harbor runtime source is redistributed.
 ClawMark, WildClawBench, Slime and Megatron code/data are not included in this
 snapshot. References to future integrations do not grant rights to those
 projects or imply that an integration has been released or validated.

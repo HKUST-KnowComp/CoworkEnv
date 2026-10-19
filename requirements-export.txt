@@ -1,0 +1,3 @@
+# Optional Harbor runner and local ATIF export (Python 3.12).
+harbor[huggingface]==0.24.0
+datasets==5.1.0
