@@ -118,7 +118,7 @@
     }
   ],
   "release_date": "2026-10-20",
-  "release_scope": "Selected Claw-Eval single-service Pinbench adapter and Harbor main-agent text ATIF export; ClawMark and training excluded.",
+  "release_scope": "Selected Claw-Eval single-service Pinbench adapter and Harbor main-agent text ATIF export; ClawMark is tracked separately in clawmark_source_manifest.json.",
   "upstream_validation": {
     "repository": "https://github.com/claw-eval/claw-eval",
     "commit": "5680b8b11ff2ee5dd2b07b89086a29a5c5c984d7",
@@ -129,7 +129,7 @@
     ]
   },
   "changes": [
-    "Renamed legacy clawmark-eval directory to adapters/claw_eval; it is unrelated to the separately deferred ClawMark tree.",
+    "Renamed legacy clawmark-eval directory to adapters/claw_eval; the separate ClawMark integration is tracked in its own manifest.",
     "Replaced private checkout defaults and symlinks with an explicit trusted source checkout; bounded copied services and fixture paths.",
     "Removed offline self-authored trace scoring and synthesized oracle solutions; restricted conversion to the supported Pinbench grading path.",
     "Added bridge-owned HTTP dispatch evidence and harness ATIF final-answer grading; fail closed on missing/malformed evidence.",
@@ -179,7 +179,7 @@
     },
     {
       "path": "docs/integrations.md",
-      "release_sha256": "69aa87326f522cfc44b911355ce6688566871db4f0f30c1c9d9063dfb3aaa532"
+      "release_sha256": "1879d84e076e784d1134e9f8f9df299a18c9f7feb27b23cc9825f0d60c2309c2"
     }
   ],
   "validation": {

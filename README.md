@@ -5,7 +5,8 @@ construction, trajectory collection and training.
 
 **This staged release contains selected tools from our existing codebase:** task
 construction and quality checks, a Claw-Eval → Harbor adapter for single-service
-Pinbench text/tool tasks, and local Harbor trajectory export. The full environment
+Pinbench text/tool tasks, a ClawMark filesystem/email multi-step adapter, and local
+Harbor trajectory export. The full environment
 and training stack remain on the roadmap. No benchmark dataset or model is bundled.
 
 The complete development workflow has been tested locally. This repository
@@ -26,6 +27,8 @@ needed to reproduce the full development setup are included in this release.
   and identify tasks with high, low or intermediate observed performance.
 - **Environment adapter:** convert selected external Claw-Eval tasks into Harbor
   tasks with a live MCP/service sidecar, bridge-recorded tool evidence and grading.
+- **ClawMark adapter:** convert selected filesystem/email tasks with stage setup
+  and weighted verification. [Setup and scope](adapters/clawmark/README.md).
 - **Trajectory export:** convert existing Harbor ATIF trials to local JSONL,
   preserving zero rewards and reporting skipped or invalid trials.
 
@@ -191,6 +194,10 @@ initial fixture state for each trial. This is a task adaptation, not a claim of
 official benchmark score equivalence. [Supported tasks, grading boundaries and
 export options](docs/integrations.md) are documented separately.
 
+For ClawMark's filesystem/email multi-step path, see the
+[ClawMark adapter guide](adapters/clawmark/README.md). Its task data comes from an
+external checkout and its vendored runtime has separate noncommercial terms.
+
 ## Repository layout
 
 ```text
@@ -201,10 +208,12 @@ data_construction/
   internal_dedup.py
   teacher_difficulty_filter.py
 adapters/claw_eval/            # Selected task conversion, MCP bridge, verifier
+adapters/clawmark/             # Filesystem/email multi-step conversion and runtime
 scripts/export_rollouts.py     # Local Harbor ATIF → JSONL
 tests/                        # Regression tests; optional upstream checks
 docs/source_manifest.json     # Original file hashes and release changes
 docs/integration_source_manifest.json
+docs/clawmark_source_manifest.json
 docs/integrations.md           # Setup, scope and validation limits
 third_party/claw-eval.LICENSE # Upstream notice for adapted tool definitions
 ```
@@ -225,9 +234,12 @@ Release scope and timing will depend on readiness.
 
 ## License and provenance
 
-Project code is released under the [MIT License](LICENSE). Tool-schema catalogs
+Project-authored code is released under the [MIT License](LICENSE). Tool-schema catalogs
 and a small vendored grader/model subset come from Claw-Eval; its notice is retained in
-[third_party/claw-eval.LICENSE](third_party/claw-eval.LICENSE). See
+[third_party/claw-eval.LICENSE](third_party/claw-eval.LICENSE).
+The ClawMark runtime under `adapters/clawmark/runtime/clawmark_vendor/` instead
+retains [CC BY-NC 4.0](third_party/clawmark.LICENSE), including its noncommercial
+condition; the root MIT license does not override it. See
 [NOTICE](NOTICE) for attribution and the boundaries of this release. No upstream
 benchmark dataset, service implementation, Slime/Megatron code, model checkpoint
 or training log is bundled here. Conversion copies selected service/fixture files

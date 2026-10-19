@@ -174,16 +174,14 @@ python -m pip install -r adapters/claw_eval/runtime/mcp_bridge/requirements.txt
 CLAW_EVAL_ROOT=/path/to/claw-eval python -m unittest discover -s tests -v
 ```
 
-## Why ClawMark is deferred
+## ClawMark filesystem/email path
 
-The archive's separate `clawmark/` tree mixes adapter code, vendored upstream
-components and task/example data, with backend-specific assumptions. Its upstream
-[license](https://github.com/evolvent-ai/ClawMark/blob/main/LICENSE) is CC BY-NC 4.0,
-which includes attribution and noncommercial conditions. It should not be folded
-into a blanket MIT release. This is not a prohibition on publishing an adapter;
-it calls for a separate dependency/license boundary and a working backend check.
+The separate archive directory `clawmark/` is now released selectively under
+[`adapters/clawmark/`](../adapters/clawmark/README.md). It supports filesystem/email
+stage setup and weighted verification through Harbor multi-step tasks. External
+task data and assets remain in a user-supplied, pinned ClawMark checkout.
 
-A later release can expose a thin adapter using an external, pinned ClawMark
-checkout, preserve notices for any redistributed components, and publish only
-examples whose provenance and redistribution terms have been checked. No ClawMark
-code, fixtures or tasks are included in the current release.
+Its vendored runtime retains CC BY-NC 4.0 with attribution; it is not covered by
+the project's MIT license. The ClawMark guide records the dependencies, converted
+real tasks and scoring adaptations. The existing JSONL wrapper expects a
+trial-level main-agent ATIF file and does not stitch multi-step ClawMark episodes.

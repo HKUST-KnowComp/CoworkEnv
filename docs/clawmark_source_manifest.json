@@ -1,0 +1,185 @@
+{
+  "source_archive": "PocketWorker-release-v1.0-clean.zip",
+  "source_sha256": "efc3a1d5dd6d08c8e41435d2addef5a8eac14141ca9f3b239f355a431b829394",
+  "files": [
+    {
+      "archive_path": "clawmark/adapter.py",
+      "release_path": "adapters/clawmark/adapter.py",
+      "original_sha256": "5591da5403b85e5a905d2fd3d397e532901de0b86e31cac5d2a985ccee1f9890",
+      "release_sha256": "81202261982893c1bab3ae775942c84f94d8e0d9c69dab484d131d0358d680ff"
+    },
+    {
+      "archive_path": "clawmark/run_adapter.py",
+      "release_path": "adapters/clawmark/run_adapter.py",
+      "original_sha256": "4b8049c5301d09ef9ac36f463726b3ec34f35aa72e3b85ac89d464fb30c9309e",
+      "release_sha256": "442220fcc2b49282cee6c1b1696e8f397e450e11df69d10b5d023ce01dc6d567"
+    },
+    {
+      "archive_path": "clawmark/runtime/ctx_runtime.py",
+      "release_path": "adapters/clawmark/runtime/ctx_runtime.py",
+      "original_sha256": "9c4e140482fe68700fe87a75ae836e72398d198951ed6225fb44ee1e7c50088e",
+      "release_sha256": "4175333a23a4349495ae46e32346241bc642539565bdbb79e671e215795e1f4e"
+    },
+    {
+      "archive_path": "clawmark/template/tests/stage_setup.py",
+      "release_path": "adapters/clawmark/template/tests/stage_setup.py",
+      "original_sha256": "4f4dfecab63d2014011b72dee65310ad98e4e4ae3a8a2a1fba1e5466e27ddadb",
+      "release_sha256": "524c3680602f2abf9ff8d6ac4411926287a484e4c7d2d01726240b06d86ce97c"
+    },
+    {
+      "archive_path": "clawmark/template/tests/test_runner.py",
+      "release_path": "adapters/clawmark/template/tests/test_runner.py",
+      "original_sha256": "9e1f74e8afe5174f18328ec409c9212004f058e6f8adebd9adafa5e1e33986a2",
+      "release_sha256": "304400ca8fe8c9ab8038c4d2a5508ef5210ad849b864ef786583d48e8f28406b"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/__init__.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/__init__.py",
+      "original_sha256": "2c8605247dbf28d6ffe877cca27742f5b5fefeffb47004318b2e426184bd362f",
+      "release_sha256": "be2d7789331a41f9ad4b688976dba955335974b9efe62270109626f60736493e"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/context.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/context.py",
+      "original_sha256": "e0df0d45015695655deb2f05ed25064e55958d598f7ad173ec3397fdd4650407",
+      "release_sha256": "e0df0d45015695655deb2f05ed25064e55958d598f7ad173ec3397fdd4650407"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/sandbox/__init__.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/sandbox/__init__.py",
+      "original_sha256": "4f43b576ed8dccfbf4a56ab20ec275510e790ccb7c68afd42e0d5c26417e2d54",
+      "release_sha256": "4f43b576ed8dccfbf4a56ab20ec275510e790ccb7c68afd42e0d5c26417e2d54"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/sandbox/base.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/sandbox/base.py",
+      "original_sha256": "e0d7670acd97c683b35597e5e8d85d118ba3693e263a200f3e4c673db46b4f3f",
+      "release_sha256": "e0d7670acd97c683b35597e5e8d85d118ba3693e263a200f3e4c673db46b4f3f"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/sandbox/local.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/sandbox/local.py",
+      "original_sha256": "2b7034f00c212cdaccee73593a34342cfd2c6b714934ef99db21c4d2f5e1117d",
+      "release_sha256": "352966f477f9a315da3dd68f7d133a371bc0006a14ba6c6268827cf03d08a08b"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/__init__.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/__init__.py",
+      "original_sha256": "74e98129102352b7b84d3a8174bb390c42ad75301aa1fdf2958a28bdc6eed0c0",
+      "release_sha256": "e7f66cee569978bcfdff829f0c41965ee5e9d1f8460afa0cc522e28e307f93da"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/base.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/base.py",
+      "original_sha256": "0a4100bdf64e73fad6adeb9a51d6b3c7fe68d781884abf8cb64a5e014bc596dc",
+      "release_sha256": "0a4100bdf64e73fad6adeb9a51d6b3c7fe68d781884abf8cb64a5e014bc596dc"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/email/__init__.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/email/__init__.py",
+      "original_sha256": "d3d7f28ded25949511c4410ee18edd8b32a34b66fe53253e3270c3b05451351d",
+      "release_sha256": "d3d7f28ded25949511c4410ee18edd8b32a34b66fe53253e3270c3b05451351d"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/email/client.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/email/client.py",
+      "original_sha256": "9b2e32951bd338e2e2da6bb47ebfde2cb664de568ee8ad473580340ba98e4f7e",
+      "release_sha256": "9b2e32951bd338e2e2da6bb47ebfde2cb664de568ee8ad473580340ba98e4f7e"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/email/manager.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/email/manager.py",
+      "original_sha256": "8b8da1048091dceb1eed80f2a756d7a9b74fee4b47176fdcf329f204ea2a820a",
+      "release_sha256": "8b8da1048091dceb1eed80f2a756d7a9b74fee4b47176fdcf329f204ea2a820a"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/filesystem/__init__.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/filesystem/__init__.py",
+      "original_sha256": "385a75f7c904ede3431f9486790e0991a4c85f1be40f5212496f23e01a3b72f1",
+      "release_sha256": "385a75f7c904ede3431f9486790e0991a4c85f1be40f5212496f23e01a3b72f1"
+    },
+    {
+      "archive_path": "clawmark/runtime/clawmark_vendor/state/filesystem/manager.py",
+      "release_path": "adapters/clawmark/runtime/clawmark_vendor/state/filesystem/manager.py",
+      "original_sha256": "daaa4efd5fa315d21b9c269b3f9945465ff4b41db85215890ecfe7ba256592df",
+      "release_sha256": "daaa4efd5fa315d21b9c269b3f9945465ff4b41db85215890ecfe7ba256592df"
+    }
+  ],
+  "release_date": "2026-10-20",
+  "release_scope": "Selected ClawMark filesystem/email adapter and runtime for Harbor multi-step execution; external task checkout required.",
+  "upstream": {
+    "repository": "https://github.com/evolvent-ai/ClawMark",
+    "commit": "d1b641b3171e584e69a3763c269069f32a13b574",
+    "vendored_license": "CC-BY-NC-4.0",
+    "license_path": "third_party/clawmark.LICENSE",
+    "unchanged_paths": [
+      "context.py",
+      "sandbox/base.py",
+      "state/base.py",
+      "state/email/__init__.py",
+      "state/email/client.py",
+      "state/email/manager.py",
+      "state/filesystem/__init__.py",
+      "state/filesystem/manager.py"
+    ]
+  },
+  "changes": [
+    "Use explicit external checkout paths and selected filesystem/email managers, with no private checkout defaults or sibling symlinks.",
+    "Parse literal notifications without running stage seeding on the host; import trusted source modules only.",
+    "Reject unsupported backends, dynamic notifications, invalid rubrics, escaping paths and symlink assets; generate atomically without overwrite.",
+    "Preserve both initial assets and later inject resources; install sqlite3 used by source stage updates.",
+    "Wait for IMAP/SMTP greetings and propagate seeding command/email failures.",
+    "Remove seed/checker source from the agent workspace after stage initialization; shared verification is not tamper-proof.",
+    "Preserve per-stage weighted checkers; fail invalid task/runtime verification without fabricated zero rewards.",
+    "Make Harbor mean/final aggregation explicit; retain extra final agent step as a documented adaptation.",
+    "Remove placeholder oracle generation and experimental service mocks; accept optional external real oracle scripts.",
+    "Retain upstream license, attribution and file hashes; document Harbor session resume and multi-step export boundary."
+  ],
+  "excluded": [
+    "ClawMark task datasets, example tasks, training tasks, assets and injected files from the archive (supplied by an external checkout instead).",
+    "Oracle solutions, generated Harbor tasks, experimental Notion/Sheets backends, diagnostics and development logs.",
+    "Cluster paths, launch scripts, private endpoints and credentials."
+  ],
+  "new_files": [
+    {
+      "path": "adapters/clawmark/README.md",
+      "release_sha256": "fc31dd619680bd31af3a4aff5de66ce5460d5cd58288f38cda194f42159dfba7"
+    },
+    {
+      "path": "adapters/clawmark/runtime/clawmark_vendor/LICENSE",
+      "release_sha256": "c94cb152316661e53817d1b5ad3d491ee01cd22cf816976029ca537927751c47"
+    },
+    {
+      "path": "adapters/clawmark/runtime/clawmark_vendor/NOTICE.md",
+      "release_sha256": "0be53b09feccde0a5e600a7b3991eb08e805ac2863d244ae02212c0a1e9e1af1"
+    },
+    {
+      "path": "third_party/clawmark.LICENSE",
+      "release_sha256": "c94cb152316661e53817d1b5ad3d491ee01cd22cf816976029ca537927751c47"
+    },
+    {
+      "path": "tests/test_clawmark.py",
+      "release_sha256": "82f02f1afb8902a6e42e7dd52af23d681febd52ad1c3e130369771965a2c53ce"
+    }
+  ],
+  "validation": {
+    "release_test_suite": {
+      "total": 30,
+      "passed": 30,
+      "skipped": 0,
+      "new_clawmark_tests": 11
+    },
+    "upstream_conversion_and_harbor_schema": [
+      "eda/task1",
+      "journalist/task5",
+      "journalist/task7"
+    ],
+    "stdlib_conversion": "All three tasks also converted with Python site packages disabled and no PYTHONPATH override.",
+    "cli": "Harbor 0.24.0 --print-config accepts the documented multi-step command with resume enabled.",
+    "dependencies": "pip check passed; included ClawMark conversion/runtime imports use the standard library and vendored managers. Container OS dependencies are declared.",
+    "sensitive_data_review": "Gitleaks 8.30.1 found no secrets in the selected release snapshot or the three existing commits; separate private-path checks passed on the snapshot and 52 historical file blobs. No guarantee about data supplied later by users.",
+    "upstream_files": "Eight retained Python files and both license copies match the pinned upstream checkout.",
+    "development_workflow": "Complete development workflow tested locally, as confirmed by the maintainer.",
+    "release_recheck_boundary": "This extraction did not repeat complete container builds/model rollouts on the preparation host; it does not claim the original development workflow was untested."
+  }
+}

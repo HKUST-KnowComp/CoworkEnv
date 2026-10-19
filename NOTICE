@@ -4,7 +4,8 @@ CoworkEnv — source and third-party notices
 This release selects data-construction utilities and environment/trajectory
 integration code from the project's existing claw-adapters development tree
 and PocketWorker-release-v1.0-clean.zip. Original file hashes and release changes
-are recorded in docs/source_manifest.json and docs/integration_source_manifest.json.
+are recorded in docs/source_manifest.json, docs/integration_source_manifest.json
+and docs/clawmark_source_manifest.json.
 The public snapshot is not a full copy of that development tree or a reproduction
 of all its experiments.
 
@@ -32,11 +33,31 @@ not bundled; conversion copies selected files from a user-supplied external
 checkout into local output. The catalog routes and grading interfaces do not
 claim compatibility with every upstream revision.
 
+ClawMark
+--------
+Upstream: https://github.com/evolvent-ai/ClawMark
+Reference commit: d1b641b3171e584e69a3763c269069f32a13b574.
+Copyright (c) 2025 Evolvent AI (https://evolvent.co).
+License: Creative Commons Attribution-NonCommercial 4.0 International.
+Upstream notice: third_party/clawmark.LICENSE.
+License terms: https://creativecommons.org/licenses/by-nc/4.0/.
+
+adapters/clawmark/runtime/clawmark_vendor/ contains selected upstream context,
+filesystem/email managers and an adapted in-container transport. That subtree
+retains CC BY-NC 4.0; the repository-root MIT license does not relicense it.
+Its NOTICE.md identifies changes and preserves the email client's Toolathlon
+attribution. No endorsement by either upstream project is implied.
+
+The project adapter converts trusted external tasks to Harbor multi-step tasks.
+Task data, fixtures, oracle scripts and the development archive's experimental
+Notion/Sheets mocks are not included. Per-stage checkers are retained, while
+Harbor's step aggregation and final-step behavior are documented adaptations.
+
 Other dependencies
 ------------------
 PyYAML, Pydantic, Harbor, datasets, FastMCP and other declared dependencies are
 installed separately and are not vendored. The exporter calls Harbor's own ATIF
 conversion API; no Harbor runtime source is redistributed.
-ClawMark, WildClawBench, Slime and Megatron code/data are not included in this
+WildClawBench, Slime and Megatron code/data are not included in this
 snapshot. References to future integrations do not grant rights to those
 projects or imply that an integration has been released or validated.
