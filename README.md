@@ -219,7 +219,7 @@ Potential future directions include:
 
 - Broader environment and evaluation support.
 - Additional data construction and trajectory tools.
-- Selected training resources and examples.
+- Additional training resources and examples.
 
 Release scope and timing will depend on readiness.
 
