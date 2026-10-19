@@ -215,28 +215,13 @@ for the checks repeated on this extracted release and its reproduction scope.
 
 ## Roadmap
 
-The following are planned release areas, not currently supported public APIs:
+Potential future directions include:
 
-- [ ] Publish the remaining runtime dependencies and complete run configurations
-  needed to reproduce the full locally tested workflow.
-- [ ] Environment execution: initialization/reset, service management, sandbox
-  integration and artifact collection beyond the selected single-service path.
-- [ ] Broader trajectory support: multimodal/subagent export and teacher
-  rollout collection workflows.
-- [ ] Task construction workflow: seed specifications, golden-state checks,
-  grader validation and task manifests with source/split information.
-- [ ] Evaluation adapters, preserving each benchmark's scoring protocol and
-  third-party terms.
-- [ ] ClawMark adapter and examples, following a separate backend/dependency
-  review and release under the applicable upstream terms. ClawMark is deferred
-  from this release; its upstream code/data are not included.
-- [ ] SFT conversion and training configurations.
-- [ ] RL rollout integration, reproducible training configurations and the
-  required upstream patches/version pins.
-- [ ] Process-reward evaluation, rubric review and calibration tools, with
-  implementation, test and training-validation status reported separately.
-- [ ] Dataset/model release indexes and reproducibility records, where available
-  and redistributable.
+- Broader environment and evaluation support.
+- Additional data construction and trajectory tools.
+- Selected training resources and examples.
+
+Release scope and timing will depend on readiness.
 
 ## License and provenance
 
