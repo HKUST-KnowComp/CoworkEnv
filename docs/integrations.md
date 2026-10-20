@@ -76,7 +76,18 @@ reference solution is emitted. Keep generated tasks under ignored `outputs/`.
 ## Running and grading
 
 On a host with Docker Compose, configure an MCP-capable Harbor agent and its
-model credentials, then run the command shown in the [README](../README.md).
+model credentials. After converting the task above, set `HARBOR_MODEL` to a
+model supported by that agent and run:
+
+```bash
+harbor run --path outputs/claw-eval/T087_pinbench_market_news_brief \
+  --agent claude-code --model "$HARBOR_MODEL" \
+  --env docker --n-concurrent 1 --job-name market-brief
+
+python scripts/export_rollouts.py --jobs-dir jobs/market-brief \
+  --episodes last --output outputs/market-brief.jsonl
+```
+
 The generated composition expects Harbor's Docker backend and shared verifier
 mode. Other backends and separate-verifier mode are not validated.
 

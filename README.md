@@ -1,79 +1,55 @@
+<div align="center">
+
 # CoworkEnv
 
-CoworkEnv is a project for building executable work environments for agent data
-construction, trajectory collection and training.
+### Synthesizing Training Environments for Long-Horizon Cowork Agents
 
-**This staged release contains selected tools from our existing codebase:** task
-construction and quality checks, a Claw-Eval → Harbor adapter for single-service
-Pinbench text/tool tasks, a ClawMark filesystem/email multi-step adapter, local
-Harbor trajectory export, text/tool LoRA SFT, and standalone RL data/reward
-utilities. The full environment and distributed RL stack remain on the roadmap.
-No benchmark dataset or model is bundled.
+**Build work environments. Collect interactions. Train cowork agents.**
 
-The complete development workflow has been tested locally. This repository
-publishes selected components of that workflow; not all files and configurations
-needed to reproduce the full development setup are included in this release.
+[Quick Start](#quick-start) · [Documentation](#documentation) · [Roadmap](#release-and-roadmap) · [License](#license)
 
-## Available now
+</div>
 
-- **Task generation:** turn a seed specification into a task definition, initial
-  service fixtures and a deterministic grader.
-- **Tool catalogs:** 44 tool definitions across 12 service interfaces, including
-  email, calendar, contacts, CRM, helpdesk, finance and scheduling.
-- **Numeric leakage checks:** look for declared ground-truth values in task
-  instructions and recognized text fixtures.
-- **Task diversity reports:** flag lexical near-duplicates and concentrated
-  template families within a task pool.
-- **Teacher difficulty summaries:** aggregate existing rollout completion scores
-  and identify tasks with high, low or intermediate observed performance.
-- **Environment adapter:** convert selected external Claw-Eval tasks into Harbor
-  tasks with a live MCP/service sidecar, bridge-recorded tool evidence and grading.
-- **ClawMark adapter:** convert selected filesystem/email tasks with stage setup
-  and weighted verification. [Setup and scope](adapters/clawmark/README.md).
-- **Trajectory export:** convert existing Harbor ATIF trials to local JSONL,
-  preserving zero rewards and reporting skipped or invalid trials.
-- **SFT:** validate and convert text/tool trajectories, train LoRA adapters, and
-  merge them into an explicit base model. [Training guide](training/README.md).
-- **RL utilities:** prepare explicit task manifests and compute GRPO/GDPO-style
-  episode advantages with validity masks. These are standalone preprocessing
-  components, not a complete RL trainer.
+## Overview
 
-These are existing project components with release cleanup. Offline construction,
-conversion and export need no model endpoint, API key, GPU or cluster access.
-Running an agent additionally requires Docker and the chosen model's credentials.
+This repository contains the implementation of **CoworkEnv: Synthesizing Training
+Environments for Long-Horizon Cowork Agents**.
 
-## Install
+Cowork agents carry out multi-step work across files, tools and services.
+Training them requires environments that connect a task's goal to an initial
+world state, available actions and verifiable outcomes. CoworkEnv brings together
+**task construction, environment execution, trajectory collection and training**
+to support this workflow.
 
-Use Python 3.10 or newer. This release was checked with Python 3.12.
+### Core capabilities
+
+- **Construct training environments.** Turn seed specifications into task
+  definitions, service fixtures and graders, with tool catalogs spanning 12
+  service interfaces.
+- **Inspect task quality.** Check known answer leakage, compare task diversity
+  and summarize difficulty from recorded teacher rollouts.
+- **Collect grounded interactions.** Use selected Claw-Eval and ClawMark adapters
+  with Harbor to execute tasks, score outcomes and record trajectories.
+- **Prepare agents for training.** Export text/tool trajectories, train and merge
+  LoRA adapters, and prepare task manifests and GRPO/GDPO-style episode signals
+  for RL workflows.
+
+## Quick Start
+
+Use **Python 3.12** and run commands from the repository root.
 
 ```bash
 git clone https://github.com/HKUST-KnowComp/CoworkEnv.git
 cd CoworkEnv
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Run scripts directly from the repository root. The optional adapter and Harbor
-integration require **Python 3.12** and their own dependencies:
+### 1. Construct tasks
 
-```bash
-python -m pip install -r requirements-adapters.txt -r requirements-export.txt
-```
-
-The service-side dependencies are installed inside the generated sidecar image.
-See [the integration guide](docs/integrations.md) for scope, versions and validation.
-SFT training uses a separate optional dependency set and Python 3.12; see the
-[training guide](training/README.md). Conversion and RL preprocessing remain
-independent of the model-training stack.
-
-## Use the tools with your data
-
-The paths below are placeholders for your own specifications, task directories
-and recorded results. This release does not include a task dataset or rollout
-archive.
-
-### Generate a task definition
+Provide a seed specification describing the task, initial service state and
+completion checks:
 
 ```bash
 python data_construction/d1_generator.py \
@@ -81,179 +57,72 @@ python data_construction/d1_generator.py \
   --out outputs/constructed
 ```
 
-The JSON specification follows `SeedSpec` in
-[`d1_generator.py`](data_construction/d1_generator.py). Required fields are
-`task_id`, `task_name`, `difficulty`, `category`, `services`, `prompt_body`,
-`language`, `fixtures` and `completion_checks`.
+The output contains a task definition, fixtures and a grader. See the
+[task construction guide](docs/data_construction.md) for the specification
+format, quality checks and runtime requirements.
 
-- `services` lists catalog names. `fixtures` maps each service to a non-empty
-  mapping of JSON filenames to initial state; the first file is its primary
-  fixture. Fixture names must be plain filenames, not paths.
-- Each completion check has a `name`, `weight` and `kind`. Weights must be finite,
-  non-negative and sum to 1. Supported kinds are `tool_called`,
-  `tool_arg_contains`, `tool_arg_excludes`, `tool_arg_number_near` and
-  `audit_present`; their fields and semantics are documented in `CompletionCheck`.
-- Optional `safety_forbidden_tools` configures the grader's safety gate.
-  Optional `leakage_strings` declares answer strings to check in the prompt.
-- Use a fresh `task_id` or output directory: existing task directories are not
-  overwritten.
+### 2. Execute tasks and collect trajectories
 
-Output is `outputs/constructed/tasks/<task_id>/`, containing `task.yaml`,
-`grader.py` and `fixtures/<service>/*.json`.
-
-**Generation does not execute or validate the task in an environment.** The
-generated YAML references `mock_services/<service>/server.py`, and the grader
-imports the `claw_eval` API. Compatible service servers remain external to this
-release. The adapter below supports a specific Pinbench grader family; it does
-**not** execute all graders emitted by this generator. The catalogs describe interfaces;
-they do not implement those services. Keep `grader.py` on the verifier side.
-
-The prompt leakage gate only checks supplied strings. Strings containing an
-ASCII capital, digit or `@` block generation on a match; other matches produce
-warnings. Fixtures are not scanned by this gate. Review task goals, fixtures,
-evidence availability and grader predicates before using generated tasks.
-
-### Scan known numeric answers
+Install the optional environment and export dependencies:
 
 ```bash
-python data_construction/leakage_scan.py \
-  --task-dir /path/to/task \
-  --gt 69.6 49.7
+python -m pip install -r requirements-adapters.txt -r requirements-export.txt
 ```
 
-The scanner reads `instruction.md`, the prompt and `reference_solution` from
-`tests/task.yaml` (or root `task.yaml`), and `.json`, `.csv`, `.txt`, `.md`,
-`.yaml` and `.yml` files under `exec/` and `fixtures/`.
+Use the [Claw-Eval execution guide](docs/integrations.md) or
+[ClawMark guide](adapters/clawmark/README.md) to adapt and run tasks from your
+upstream checkout. Execution requires Docker and a configured Harbor agent.
+The guides describe the supported task families and grading protocols.
 
-Exit codes: **0** means no supplied values matched in scanned text, **2** means a
-match was found, and **1** means the input could not be scanned completely.
-The CLI ignores integer values 0 and 100 by default; pass `--ignore-ints` with
-no values to disable that exception. Matching is numeric and approximate, with
-tolerance `max(1e-6, abs(gt) * 1e-4)`; binary files, semantic answers, negative
-numbers and scientific notation require separate review. A clean result is not
-a general guarantee against answer leakage.
-
-### Check a task pool for near-duplicates
+Export recorded Harbor main-agent ATIF trials to local JSONL:
 
 ```bash
-python data_construction/internal_dedup.py \
-  --pool-dir /path/to/task_directories \
-  --output outputs/internal_dedup.json
+python scripts/export_rollouts.py \
+  --jobs-dir /path/to/harbor-jobs --episodes last \
+  --output outputs/rollouts.jsonl
 ```
 
-Each child directory is a task. Prompts are loaded from `tests/task.yaml`,
-`task.yaml` or `instruction.md`. `--candidate /path/to/new_task` adds a task to
-the comparison; use a distinct directory name so it does not replace a pool
-entry. `--dataset-dir /path/to/tasks --tasks id1 id2` selects explicit task IDs.
+### 3. Prepare training data
 
-The report flags 4-gram overlap greater than 0.50, term-frequency cosine at least
-0.85 and template-family counts greater than 3. Cosine is **lexical**, not an
-embedding score. Template families are inferred from task names; word-based
-tokenization is limited for languages without whitespace segmentation. This is
-an all-pairs report, with quadratic pair count. Prompts that cannot be extracted from these layouts are omitted;
-file-access errors can still stop the command. It does not remove tasks, fail the command on a flagged pair, or check
-contamination against a held-out benchmark.
-
-### Summarize recorded teacher rollouts
+Convert selected text/tool trajectories and validate the resulting messages:
 
 ```bash
-python data_construction/teacher_difficulty_filter.py \
-  --jobs-dir /path/to/teacher_jobs \
-  --output outputs/teacher_difficulty.json
+python -m training.sft.convert_data \
+  --input outputs/rollouts.jsonl --output outputs/sft.jsonl
+python -m training.sft.validate_data --data outputs/sft.jsonl
 ```
 
-The reader finds `<task_id>__<trial_suffix>/result.json` recursively. A suffix is
-alphanumeric. It reads `verifier_result.rewards.completion`, falling back to
-`reward`; flat verifier and top-level completion/reward schemas are also
-accepted. Scores must be finite and in `[0, 1]`. Missing or invalid scores are
-omitted, not treated as task failures. `k` counts accepted scores, not all
-attempted runs. Repeated `--jobs-dir` inputs should cover disjoint trials from
-the same teacher and evaluation setup to avoid double counting or mixing
-incomparable scores.
+Continue with the [LoRA training and merging guide](training/README.md#train-a-lora-adapter).
+For RL, see [task manifests](training/README.md#rl-task-manifests) and
+[episode reward preprocessing](training/README.md#rl-episode-reward-preprocessing).
+Model-training dependencies are installed separately from the environment tools.
 
-The report contains per-task `k`, mean, range and variance. Historical labels
-are retained: `TRIVIAL` for mean ≥ 0.999, `UNSOLVABLE` for mean ≤ 0.001 and `KEEP`
-otherwise. These describe observed scores; they do not prove solvability or
-learning value. Inspect failures and sample counts before deciding to filter.
-This command reads results only; it does not launch teacher rollouts.
+## Documentation
 
-## Execute and export an existing task
+- **[Task construction](docs/data_construction.md)** — seed specifications,
+  fixtures, graders and quality checks.
+- **[Claw-Eval integration](docs/integrations.md)** — task adaptation, execution,
+  outcome scoring and trajectory export.
+- **[ClawMark integration](adapters/clawmark/README.md)** — filesystem/email tasks
+  with multiple stages and environment updates.
+- **[SFT and RL components](training/README.md)** — data formats, LoRA training,
+  weight merging and standalone RL utilities.
 
-Use your own trusted Claw-Eval checkout, including its service code and fixtures:
+## Release and Roadmap
 
-```bash
-python adapters/claw_eval/run_adapter.py \
-  --claw-eval-root /path/to/claw-eval \
-  --task-ids T087_pinbench_market_news_brief \
-  --output-dir outputs/claw-eval
+We are releasing CoworkEnv incrementally. The current repository includes the
+components described above; RL support currently covers data and reward
+preprocessing. The full distributed RL stack, task datasets and model weights
+are not bundled. The complete development workflow has been tested locally;
+component guides document the scope and checks of this public release.
 
-# Requires Docker Compose, an MCP-capable Harbor agent and its model credentials.
-harbor run --path outputs/claw-eval/T087_pinbench_market_news_brief \
-  --agent claude-code --model "$HARBOR_MODEL" \
-  --env docker --n-concurrent 1 --job-name market-brief
+Future releases may expand environment coverage, data construction and trajectory
+tools, and training resources. Scope and timing depend on readiness.
 
-python scripts/export_rollouts.py --jobs-dir jobs/market-brief \
-  --episodes last --output outputs/market-brief.jsonl
-```
+## License
 
-Set `HARBOR_MODEL` to a model supported by your configured Harbor agent. The
-adapter retains the selected task's grader, records HTTP tool dispatches, and
-reads the harness's final ATIF answer. A fresh service sidecar provides the
-initial fixture state for each trial. This is a task adaptation, not a claim of
-official benchmark score equivalence. [Supported tasks, grading boundaries and
-export options](docs/integrations.md) are documented separately.
-
-For ClawMark's filesystem/email multi-step path, see the
-[ClawMark adapter guide](adapters/clawmark/README.md). Its task data comes from an
-external checkout and its vendored runtime has separate noncommercial terms.
-
-## Repository layout
-
-```text
-data_construction/
-  d1_generator.py
-  d1_catalog/                  # Service tool/endpoint schemas
-  leakage_scan.py
-  internal_dedup.py
-  teacher_difficulty_filter.py
-adapters/claw_eval/            # Selected task conversion, MCP bridge, verifier
-adapters/clawmark/             # Filesystem/email multi-step conversion and runtime
-scripts/export_rollouts.py     # Local Harbor ATIF → JSONL
-training/sft/                 # Text/tool conversion, validation, LoRA and merge
-training/rl/                  # Explicit task manifests and episode advantages
-requirements-sft.txt          # Optional model-training dependencies
-tests/                        # Regression tests; optional upstream checks
-docs/source_manifest.json     # Original file hashes and release changes
-docs/integration_source_manifest.json
-docs/clawmark_source_manifest.json
-docs/training_source_manifest.json
-docs/integrations.md           # Setup, scope and validation limits
-third_party/claw-eval.LICENSE # Upstream notice for adapted tool definitions
-```
-
-Run checks with `python -m unittest discover -s tests -v`. Optional integration
-tests skip if their dependencies or external checkout are absent. See the guide
-for the checks repeated on this extracted release and its reproduction scope.
-
-## Roadmap
-
-Potential future directions include:
-
-- Broader environment and evaluation support.
-- Additional data construction and trajectory tools.
-- Additional training resources and examples.
-
-Release scope and timing will depend on readiness.
-
-## License and provenance
-
-Project-authored code is released under the [MIT License](LICENSE). Tool-schema catalogs
-and a small vendored grader/model subset come from Claw-Eval; its notice is retained in
-[third_party/claw-eval.LICENSE](third_party/claw-eval.LICENSE).
-The ClawMark runtime under `adapters/clawmark/runtime/clawmark_vendor/` instead
-retains [CC BY-NC 4.0](third_party/clawmark.LICENSE), including its noncommercial
-condition; the root MIT license does not override it. See
-[NOTICE](NOTICE) for attribution and the boundaries of this release. No upstream
-benchmark dataset, service implementation, Slime/Megatron code, model checkpoint
-or training log is bundled here. Conversion copies selected service/fixture files
-from the external checkout into ignored local output, not into this repository.
+Project-authored code is released under the [MIT License](LICENSE).
+Selected Claw-Eval components retain their upstream MIT notice. The vendored
+ClawMark runtime retains **[CC BY-NC 4.0](third_party/clawmark.LICENSE)**, including
+its noncommercial condition. See [NOTICE](NOTICE) for attribution and licensing
+boundaries.
