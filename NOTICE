@@ -1,11 +1,11 @@
 CoworkEnv — source and third-party notices
 ========================================
 
-This release selects data-construction utilities and environment/trajectory
-integration code from the project's existing claw-adapters development tree
+This release selects data-construction utilities, environment/trajectory
+integration code and training components from the project's existing development tree
 and PocketWorker-release-v1.0-clean.zip. Original file hashes and release changes
-are recorded in docs/source_manifest.json, docs/integration_source_manifest.json
-and docs/clawmark_source_manifest.json.
+are recorded in docs/source_manifest.json, docs/integration_source_manifest.json,
+docs/clawmark_source_manifest.json and docs/training_source_manifest.json.
 The public snapshot is not a full copy of that development tree or a reproduction
 of all its experiments.
 
@@ -55,7 +55,12 @@ Harbor's step aggregation and final-step behavior are documented adaptations.
 
 Other dependencies
 ------------------
-PyYAML, Pydantic, Harbor, datasets, FastMCP and other declared dependencies are
+The training/ subtree adapts selected project SFT scripts and group-reward/task
+preprocessing helpers. It contains no Slime or Megatron runtime source. Source
+mapping and intentional changes are recorded in docs/training_source_manifest.json.
+
+PyYAML, Pydantic, Harbor, datasets, FastMCP, PyTorch, torchvision, Transformers,
+PEFT, Accelerate and other declared dependencies are
 installed separately and are not vendored. The exporter calls Harbor's own ATIF
 conversion API; no Harbor runtime source is redistributed.
 WildClawBench, Slime and Megatron code/data are not included in this

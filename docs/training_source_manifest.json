@@ -1,0 +1,98 @@
+{
+  "source_archive": "PocketWorker-release-v1.0-clean.zip",
+  "source_sha256": "efc3a1d5dd6d08c8e41435d2addef5a8eac14141ca9f3b239f355a431b829394",
+  "files": [
+    {
+      "archive_path": "train/convert_sft_data.py",
+      "release_path": "training/sft/convert_data.py",
+      "original_sha256": "5e3f52edb3a5f911e696b0554dfacc85b846846aacd03618a5550be7708e4cd2",
+      "release_sha256": "35eb9dbd38af8878dbc1c7555ada3a477b2070803b392da2f7d7b728f75944bf"
+    },
+    {
+      "archive_path": "train/sft_preflight.py",
+      "release_path": "training/sft/validate_data.py",
+      "original_sha256": "870e5547cf73ce3b9841ed75d57f27bb4032e86f77708a623e3b7aca7011d318",
+      "release_sha256": "267302fe3c4a61f509b9e0ffa487f596fdc49b24880fe8505d9371f47ca2db84"
+    },
+    {
+      "archive_path": "train/run_sft_iter2.py",
+      "release_path": "training/sft/train_lora.py",
+      "original_sha256": "9e564993cc3046c692ef78d68e2d25139affa2104ee858d90010f5b35ab89eca",
+      "release_sha256": "df3051f5ef0a75459826b39c178c4315cb874470490014add4e3603358b827b6"
+    },
+    {
+      "archive_path": "train/merge_lora.py",
+      "release_path": "training/sft/merge_lora.py",
+      "original_sha256": "6184296861b76cae4cdb82a8e5333edd75481c4474cf5e8e4d7c8e5400d76d4e",
+      "release_sha256": "6854eed3d71189680e1b85143dd1553423b760f3541c0d881faf7c958143bfdf"
+    },
+    {
+      "archive_path": "train/rl/prepare_prompts.py",
+      "release_path": "training/rl/prepare_prompts.py",
+      "original_sha256": "1f9c41d7a54223efc0f1f3d2f29d73b7b0f93083ddc02b7b12b094330ceda017",
+      "release_sha256": "de6f99840e6154dfdc0ef8123e91ee3ef3587a0ca2140ec6c1b1b09d3b59e501"
+    },
+    {
+      "archive_path": "claw_rl/group_filter_dim.py",
+      "release_path": "training/rl/group_rewards.py",
+      "original_sha256": "7b4c6bd5239a6d81765f34c8347594525ab76f9a9f0b35aa7afa920aabbf9037",
+      "release_sha256": "851ce6464f674d1a51b65ef36f85e854af0a947d7ddfd94f4ddadfb735d4b3f3"
+    }
+  ],
+  "new_release_files": [
+    {
+      "release_path": "requirements-sft.txt",
+      "release_sha256": "74a0b630d0a4dce397f8287743a8db5aef633bccdb66a85c7f2848b568e8ac9d"
+    },
+    {
+      "release_path": "tests/test_sft_runtime.py",
+      "release_sha256": "23028775fbaa14371b144e9d05b092b5f5b1b7906cb5855980aadbc8bc71ad0d"
+    },
+    {
+      "release_path": "tests/test_training_data.py",
+      "release_sha256": "35fe2e10e0db0dfd00068381ba810d1d7d8b2db7143adcc56a13103abb30f3b5"
+    },
+    {
+      "release_path": "training/README.md",
+      "release_sha256": "45152792c706a9443add6efa6b9f62321d0c3b42fe1119b26ec43ea5056af9a0"
+    },
+    {
+      "release_path": "training/__init__.py",
+      "release_sha256": "473bcd052450b4c5477048b290be9c1c962e68044b5484835b6cb9adf7ba1229"
+    },
+    {
+      "release_path": "training/jsonl.py",
+      "release_sha256": "7ea5c5e1f101888d42d6da66a739698a01807ae69b0c3ebd4e57091b3fcbc743"
+    },
+    {
+      "release_path": "training/rl/__init__.py",
+      "release_sha256": "92224fbae73ad4ebf7dca2926f59a9c76f8216a89be8c6d4f2991397e23ba849"
+    },
+    {
+      "release_path": "training/sft/__init__.py",
+      "release_sha256": "0fd1eba888ee4306c55e4f6de7968e5a13f83a079d3d61e9eca55e2b81143a76"
+    },
+    {
+      "release_path": "training/sft/modeling.py",
+      "release_sha256": "a2915fca3d3bbe85fcce3619405cee3c088c292e854d0acf70d403e300dac72b"
+    }
+  ],
+  "release_changes": [
+    "Explicit user-supplied model/data/output paths replace development-machine defaults; cluster launchers and embedded credentials are not selected.",
+    "SFT conversion rejects malformed tool pairing and media, retains complete text observations, and never inserts fake tool responses or converts missing rewards to zero.",
+    "Full-conversation causal-LM loss is retained; only batch padding is masked. Overlength examples fail instead of being truncated.",
+    "Qwen3-VL uses its matching Transformers model class and AutoProcessor; a causal-LM path is available. Single-process LoRA training uses a separately pinned optional stack.",
+    "Merging requires an explicit base model and saves the processor/tokenizer. Existing output is protected.",
+    "GRPO/GDPO-style preprocessing is independent of Slime; groups and validity masks are explicit, dictionary reward keys are unambiguous, and missing dimensions reject a group instead of falling back to an aggregate.",
+    "Task selection is explicit and manifest paths are relative by default. No benchmark train/test split or hidden exclusions are inferred.",
+    "Local regression tests cover data integrity, reward semantics, actual tiny-model CPU LoRA updates and merge-logit equivalence for both model-loading paths."
+  ],
+  "not_included": [
+    "Model weights and training data",
+    "Historical cluster launchers and logs",
+    "Slime/Megatron source and full RL rollout/training integration",
+    "Process-reward and rubric-calibration pipelines",
+    "GPU-scale reproduction configurations"
+  ],
+  "validation_scope": "The complete development workflow was tested locally. Release checks cover the selected components, not a repeat of all historical GPU experiments."
+}

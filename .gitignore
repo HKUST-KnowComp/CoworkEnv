@@ -2,6 +2,11 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .venv/
+.venv-*/
+checkpoints/
+*.safetensors
+*.pt
+*.pth
 .env
 .env.*
 !.env.example

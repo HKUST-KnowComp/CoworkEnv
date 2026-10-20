@@ -5,9 +5,10 @@ construction, trajectory collection and training.
 
 **This staged release contains selected tools from our existing codebase:** task
 construction and quality checks, a Claw-Eval → Harbor adapter for single-service
-Pinbench text/tool tasks, a ClawMark filesystem/email multi-step adapter, and local
-Harbor trajectory export. The full environment
-and training stack remain on the roadmap. No benchmark dataset or model is bundled.
+Pinbench text/tool tasks, a ClawMark filesystem/email multi-step adapter, local
+Harbor trajectory export, text/tool LoRA SFT, and standalone RL data/reward
+utilities. The full environment and distributed RL stack remain on the roadmap.
+No benchmark dataset or model is bundled.
 
 The complete development workflow has been tested locally. This repository
 publishes selected components of that workflow; not all files and configurations
@@ -31,6 +32,11 @@ needed to reproduce the full development setup are included in this release.
   and weighted verification. [Setup and scope](adapters/clawmark/README.md).
 - **Trajectory export:** convert existing Harbor ATIF trials to local JSONL,
   preserving zero rewards and reporting skipped or invalid trials.
+- **SFT:** validate and convert text/tool trajectories, train LoRA adapters, and
+  merge them into an explicit base model. [Training guide](training/README.md).
+- **RL utilities:** prepare explicit task manifests and compute GRPO/GDPO-style
+  episode advantages with validity masks. These are standalone preprocessing
+  components, not a complete RL trainer.
 
 These are existing project components with release cleanup. Offline construction,
 conversion and export need no model endpoint, API key, GPU or cluster access.
@@ -57,6 +63,9 @@ python -m pip install -r requirements-adapters.txt -r requirements-export.txt
 
 The service-side dependencies are installed inside the generated sidecar image.
 See [the integration guide](docs/integrations.md) for scope, versions and validation.
+SFT training uses a separate optional dependency set and Python 3.12; see the
+[training guide](training/README.md). Conversion and RL preprocessing remain
+independent of the model-training stack.
 
 ## Use the tools with your data
 
@@ -210,10 +219,14 @@ data_construction/
 adapters/claw_eval/            # Selected task conversion, MCP bridge, verifier
 adapters/clawmark/             # Filesystem/email multi-step conversion and runtime
 scripts/export_rollouts.py     # Local Harbor ATIF → JSONL
+training/sft/                 # Text/tool conversion, validation, LoRA and merge
+training/rl/                  # Explicit task manifests and episode advantages
+requirements-sft.txt          # Optional model-training dependencies
 tests/                        # Regression tests; optional upstream checks
 docs/source_manifest.json     # Original file hashes and release changes
 docs/integration_source_manifest.json
 docs/clawmark_source_manifest.json
+docs/training_source_manifest.json
 docs/integrations.md           # Setup, scope and validation limits
 third_party/claw-eval.LICENSE # Upstream notice for adapted tool definitions
 ```

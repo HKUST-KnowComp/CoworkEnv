@@ -1,0 +1,8 @@
+# Optional text/tool LoRA training and merging; Python 3.12.
+# Kept separate from the lightweight environment/conversion installation.
+torch==2.11.0
+torchvision==0.26.0
+transformers==5.10.1
+peft==0.21.2
+accelerate==1.13.0
+datasets==5.1.0
